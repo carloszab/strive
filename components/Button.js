@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import { Text, StyleSheet, Pressable } from "react-native";
 import { styled } from "nativewind";
+import { buttons } from "../styles/buttons";
 
 const StyledPressable = styled(Pressable);
 const StyledText = styled(Text);
@@ -13,17 +14,17 @@ export default function Button(props) {
 
   function getPressableStyle() {
     if (pressed) {
-      return styles.button_active;
+      return buttons['button-active'];
     } else {
-      return styles.button;
+      return buttons.button;
     }
   }
 
   function getTextStyle() {
     if (pressed) {
-      return styles.text_active;
+      return buttons.text_active;
     } else {
-      return styles.text;
+      return buttons.text;
     }
   }
 
@@ -39,37 +40,3 @@ export default function Button(props) {
   );
 }
 
-const styles = StyleSheet.create({
-  button: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 4,
-    elevation: 3,
-    backgroundColor: "#000",
-  },
-  button_active: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 4,
-    elevation: 3,
-    backgroundColor: "green",
-  },
-  text: {
-    fontSize: 16,
-    lineHeight: 21,
-    fontWeight: "bold",
-    letterSpacing: 0.25,
-    color: "white",
-  },
-  text_active: {
-    fontSize: 16,
-    lineHeight: 21,
-    fontWeight: "bold",
-    letterSpacing: 0.25,
-    color: "white",
-  },
-});

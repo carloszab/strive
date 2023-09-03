@@ -12,6 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import Spacer from "../components/Spacer";
 import { ChevronDownIcon as ChevronDownIconOutline } from "react-native-heroicons/outline";
 import CustomButton from "../components/Button";
+import Workouts from "../components/Workouts";
 
 const HomeScreen = () => {
   const halfWindowsHeight = Dimensions.get("window").height * 0.05;
@@ -34,13 +35,14 @@ const HomeScreen = () => {
           source={require("../assets/logo-icon-pearl.png")}
           className="h-10 w-10 rounded-tr-2xl rounded-bl-2xl"
         />
-        <Text className="font-bold text-xl">
+        <Text className="font-bold text-2xl">
           Welcome
         </Text>
       </View>
       <ScrollView>
+        <Workouts/>
         <CustomButton onPress={() => {}} title="New Workout" />
-        <Button title="test" color="blue" />
+        <Button title="test" />
       </ScrollView>
     </SafeAreaView>
   );
