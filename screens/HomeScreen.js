@@ -14,11 +14,63 @@ import { ChevronDownIcon as ChevronDownIconOutline } from "react-native-heroicon
 import CustomButton from "../components/Button";
 import Workouts from "../components/Workouts";
 
+import { useQuery, gql } from '@apollo/client';
+
+
+const GET_WORKOUT = gql`
+  query GetWorkout {
+        workout {
+          id
+          name
+          detail
+        }
+      }
+`;
+
+function DisplayWorkouts() {
+  const { loading, error, data } = useQuery(GET_WORKOUT);
+
+  if (loading) return <Text>Loading...</Text>;
+  if (error) return <Text>Error : {error.message}</Text>;
+
+  return data.workout.map(({ id, name }) => (
+    <View key={id}>
+      <Text>{name}</Text>
+    </View>
+  ));
+}
+
+const GET_LOCATIONS = gql`
+  query getLocations {
+    locations {
+      id
+      name
+      description
+      photo
+    }
+  }
+`;
+
+function DisplayLocations() {
+  const { loading, error, data } = useQuery(GET_LOCATIONS);
+
+  if (loading) return <Text>Loading...</Text>;
+  if (error) return <Text>Error : {error.message} </Text>;
+  return data.locations.map(({ id, name, description, photo }) => (
+    <View key={id}>
+      <Text>{name}</Text>
+      <Text>About this location:</Text>
+      <Text>{description}</Text>
+    </View>
+  ));
+}
+
 const HomeScreen = () => {
   const halfWindowsHeight = Dimensions.get("window").height * 0.05;
   const SafeAreaViewAndroid = Platform.OS === "android" ? halfWindowsHeight : 0;
 
   const navigation = useNavigation();
+
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -44,6 +96,7 @@ const HomeScreen = () => {
         <CustomButton onPress={() => {}} title="New Workout" />
         <Button title="test" />
       </ScrollView>
+      <DisplayWorkouts />
     </SafeAreaView>
   );
 };
