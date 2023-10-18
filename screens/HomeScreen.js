@@ -12,9 +12,11 @@ import { useNavigation } from "@react-navigation/native";
 import Spacer from "../components/Spacer";
 import { ChevronDownIcon as ChevronDownIconOutline } from "react-native-heroicons/outline";
 import CustomButton from "../components/Button";
-import Workouts from "../components/Workouts";
+import Workouts from "../components/WorkoutsList";
+import NewWorkout from "./NewWorkoutScreen";
 
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql, useMutation } from '@apollo/client';
+import InsertExercise from "../components/InsertExercise";
 
 
 const GET_WORKOUT = gql`
@@ -26,6 +28,8 @@ const GET_WORKOUT = gql`
         }
       }
 `;
+
+
 
 function DisplayWorkouts() {
   const { loading, error, data } = useQuery(GET_WORKOUT);
@@ -40,30 +44,15 @@ function DisplayWorkouts() {
   ));
 }
 
-const GET_LOCATIONS = gql`
-  query getLocations {
-    locations {
-      id
-      name
-      description
-      photo
-    }
-  }
-`;
 
-function DisplayLocations() {
-  const { loading, error, data } = useQuery(GET_LOCATIONS);
+// function InsertWorkout(name, detail) {
 
-  if (loading) return <Text>Loading...</Text>;
-  if (error) return <Text>Error : {error.message} </Text>;
-  return data.locations.map(({ id, name, description, photo }) => (
-    <View key={id}>
-      <Text>{name}</Text>
-      <Text>About this location:</Text>
-      <Text>{description}</Text>
-    </View>
-  ));
-}
+  // const submit = () => {
+  //   insertTodo({
+  //     variables: { name: "hola", detail: "" },
+  //   });
+  // };
+// }
 
 const HomeScreen = () => {
   const halfWindowsHeight = Dimensions.get("window").height * 0.05;
@@ -94,9 +83,11 @@ const HomeScreen = () => {
       <ScrollView>
         <Workouts/>
         <CustomButton onPress={() => {}} title="New Workout" />
-        <Button title="test" />
+        <Button title="test" onPress={() => {navigation.navigate('NewWorkout')}}/>
+        {/* <Button title="submit" onPress={submit}/> */}
       </ScrollView>
       <DisplayWorkouts />
+      <InsertExercise />
     </SafeAreaView>
   );
 };
