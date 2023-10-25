@@ -2,8 +2,9 @@ import { View, Text, Button, TextInput, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { v4 as uuidv4 } from "uuid";
-import WorkoutSet from "../components/WorkoutSet";
 import WorkoutExercise from "../components/WorkoutExercise";
+import { performMutation } from "../src/graphql/apollo";
+import * as mutations from "../src/graphql/mutations";
 
 const NewWorkoutScreen = () => {
   const [workoutName, onChangeWorkoutName] = useState("Custom Workout");
@@ -19,15 +20,36 @@ const NewWorkoutScreen = () => {
     console.log("exercises: ", JSON.stringify(exercises));
   };
 
+  onExerciseChange = (id, sets) => {
+    let exercisesAux = [...exercises];
+    exercisesAux.map((exercise) => {
+      if (exercise["id"] === id) {
+        exercise["sets"] = sets;
+      }
+    });
+    onChangeExercises(exercisesAux);
+  };
+
+  const handleFinishExercise = performMutation(
+    mutations.INSERT_WORKOUT,
+    { id: uuidv4, name: workoutName, detail: exercises },
+    (data) => {
+      console.log(`Added todo with ID, `, data);
+    },
+    (error) => {
+      console.error("Error adding todo", error);
+    }
+  );
+
   return (
     <SafeAreaView className="bg-white pt-1">
       <TextInput
-          className="border-2 border-gray-200 m-2 rounded-md"
-          onChangeText={(e) => onChangeWorkoutName(e)}
-          value={workoutName.toString()}
-          keyboardType="numeric"
-          placeholder="Workout Name"
-        />
+        className="border-2 border-gray-200 m-2 rounded-md"
+        onChangeText={(e) => onChangeWorkoutName(e)}
+        value={workoutName.toString()}
+        keyboardType="numeric"
+        placeholder="Workout Name"
+      />
 
       <View>
         {exercises.map((item, index) => (
@@ -40,6 +62,7 @@ const NewWorkoutScreen = () => {
               index={index + 1}
               id={item["id"]}
               name={item["name"]}
+              onExerciseChange={onExerciseChange}
             />
           </View>
         ))}
@@ -56,7 +79,7 @@ const NewWorkoutScreen = () => {
         <Button title="add exercise" onPress={onAddExercise}></Button>
       </View>
 
-      <Button title="finish exercise"></Button>
+      <Button title="finish exercise" onPress={handleFinishExercise}></Button>
     </SafeAreaView>
   );
 };

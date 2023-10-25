@@ -27,6 +27,7 @@ const WorkoutExercise = (props) => {
         }
     });
     onChangeSets(setsAux);
+    props.onExerciseChange(props.id, sets);
   };
 
   return (

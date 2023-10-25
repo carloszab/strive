@@ -16,7 +16,7 @@ import Workouts from "../components/WorkoutsList";
 import NewWorkout from "./NewWorkoutScreen";
 
 import { useQuery, gql, useMutation } from '@apollo/client';
-import InsertExercise from "../components/InsertExercise";
+import WorkoutHistory from "../components/WorkoutHistory";
 
 
 const GET_WORKOUT = gql`
@@ -43,16 +43,6 @@ function DisplayWorkouts() {
     </View>
   ));
 }
-
-
-// function InsertWorkout(name, detail) {
-
-  // const submit = () => {
-  //   insertTodo({
-  //     variables: { name: "hola", detail: "" },
-  //   });
-  // };
-// }
 
 const HomeScreen = () => {
   const halfWindowsHeight = Dimensions.get("window").height * 0.05;
@@ -86,8 +76,8 @@ const HomeScreen = () => {
         <Button title="test" onPress={() => {navigation.navigate('NewWorkout')}}/>
         {/* <Button title="submit" onPress={submit}/> */}
       </ScrollView>
-      <DisplayWorkouts />
-      <InsertExercise />
+      {/* <DisplayWorkouts /> */}
+      <WorkoutHistory />
     </SafeAreaView>
   );
 };
