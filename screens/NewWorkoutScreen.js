@@ -1,15 +1,21 @@
-import { View, Text, Button, TextInput, StyleSheet } from "react-native";
-import React, { useEffect, useState } from "react";
+import { View, Button, TextInput, StyleSheet } from "react-native";
+import React, { useLayoutEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { v4 as uuidv4 } from "uuid";
 import WorkoutExercise from "../components/WorkoutExercise";
 import { performMutation } from "../src/graphql/apollo";
 import * as mutations from "../src/graphql/mutations";
 
-const NewWorkoutScreen = () => {
+const NewWorkoutScreen = ({navigation}) => {
   const [workoutName, onChangeWorkoutName] = useState("Custom Workout");
   const [exerciseName, onChangeExerciseName] = useState("");
   const [exercises, onChangeExercises] = useState([]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "Custom Workout",
+    });
+  }, []);
 
   onAddExercise = () => {
     let myuuid = uuidv4();
@@ -47,7 +53,6 @@ const NewWorkoutScreen = () => {
         className="border-2 border-gray-200 m-2 rounded-md"
         onChangeText={(e) => onChangeWorkoutName(e)}
         value={workoutName.toString()}
-        keyboardType="numeric"
         placeholder="Workout Name"
       />
 
@@ -73,7 +78,6 @@ const NewWorkoutScreen = () => {
           className="border-2 border-gray-200 m-2 rounded-md"
           onChangeText={(e) => onChangeExerciseName(e)}
           value={exerciseName.toString()}
-          keyboardType="numeric"
           placeholder="Exercise Name"
         />
         <Button title="add exercise" onPress={onAddExercise}></Button>

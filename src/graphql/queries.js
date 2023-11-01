@@ -6,6 +6,7 @@ export const GET_WORKOUTS = gql`
       id
       name
       detail
+      timestamp
     }
   }
 `;
@@ -16,6 +17,7 @@ export const GET_WORKOUT_BY_PK = gql`
       id
       name
       detail
+      timestamp
     }
   }
 `;

@@ -10,6 +10,7 @@ export default function Button(props) {
   const [pressed, setPressed] = useState(false);
   const onPress = (e) => {
     setPressed(!pressed);
+    props.onPress()
   };
 
   function getPressableStyle() {
@@ -29,14 +30,14 @@ export default function Button(props) {
   }
 
   return (
-    <StyledPressable
+    <Pressable
       style={[getPressableStyle(), props.styleButton]}
       onPress={onPress}
     >
-      <StyledText selectable={false} style={getTextStyle()}>
+      <Text selectable={false} style={getTextStyle()}>
         {props.title}
-      </StyledText>
-    </StyledPressable>
+      </Text>
+    </Pressable>
   );
 }
 

@@ -1,15 +1,16 @@
 import { View, Text, Button } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import WorkoutSet from "./WorkoutSet";
 
 const WorkoutExercise = (props) => {
   const [sets, onChangeSets] = useState([]);
 
-  //   useEffect(() => { onChangeSets(props.sets);}, [props.sets]);
-
-  // if sets != props.sets
-  // onChangeSets(props.sets);
+  useEffect(() => {
+    if (props.sets !== undefined) {
+      onChangeSets(props.sets);
+    }
+  }, [props.sets]);
 
   onAddSet = () => {
     let myuuid = uuidv4();
