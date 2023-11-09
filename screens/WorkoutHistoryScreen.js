@@ -1,33 +1,40 @@
-import { View, Text, FlatList, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import React, { useLayoutEffect } from "react";
-import * as queries from "../src/graphql/queries";
-import { useQuery } from "@apollo/client";
-import { useNavigation } from "@react-navigation/native";
 
-const WorkoutHistory = () => {
-  const { loading, error, data } = useQuery(queries.GET_WORKOUTS);
-
-  const navigation = useNavigation();
-
+const WorkoutHistory = ({ route, navigation }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: "History",
     });
   }, []);
 
-  if (loading) {
+  if (route.params.loading) {
     return <Text>Loading...</Text>;
   }
 
-  if (error) {
-    return <Text>Error: {error.message}</Text>;
+  if (route.params.error) {
+    return <Text>Error: {route.params.error.message}</Text>;
   }
 
   return (
-      <FlatList
-        data={data.workout}
-        keyExtractor={(workout) => workout.id}
-        renderItem={({ item: workout }) => (
+    <FlatList
+      data={route.params.workouts.workout}
+      keyExtractor={(workout) => workout.id}
+      renderItem={({ item: workout }) => (
+        <TouchableOpacity
+          key={workout.id}
+          onPress={() => {
+            navigation.navigate("WorkoutView", {
+              name: workout.name,
+              detail: workout.detail,
+            });
+          }}
+        >
           <View
             style={{
               borderBottomWidth: 1,
@@ -74,8 +81,9 @@ const WorkoutHistory = () => {
               </View>
             </View>
           </View>
-        )}
-      />
+        </TouchableOpacity>
+      )}
+    />
   );
 };
 

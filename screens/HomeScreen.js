@@ -13,11 +13,14 @@ import { useNavigation } from "@react-navigation/native";
 import Spacer from "../components/Spacer";
 import CustomButton from "../components/Button";
 import Workouts from "../components/WorkoutsList";
-import NewWorkout from "./NewWorkoutScreen";
 import WorkoutHistoryRecent from "../components/WorkoutHistoryRecent";
-import { StatusBar } from "expo-status-bar";
+import WorkoutCalendar from "../components/WorkoutCalendar";
+import * as queries from "../src/graphql/queries";
+import { useQuery } from "@apollo/client";
 
 const HomeScreen = () => {
+  const { loading, error, data: workouts} = useQuery(queries.GET_WORKOUTS);
+
   const fivePercentWindowHeight = Dimensions.get("window").height * 0.05;
   const SafeAreaViewAndroid =
     Platform.OS === "android" ? fivePercentWindowHeight : 0;
@@ -56,22 +59,11 @@ const HomeScreen = () => {
           }}
         />
         <Spacer size={Dimensions.get("window").height * 0.05} />
-        <Text
-          className="font-bold text-xl"
-          onPress={() => {
-            navigation.navigate("WorkoutHistory");
-          }}
-        >
-          {"History >"}
-        </Text>
-        <WorkoutHistoryRecent />
-        <Button
-          title="see more..."
-          onPress={() => {
-            navigation.navigate("WorkoutHistory");
-          }}
-        />
-        {/* <Spacer size={Dimensions.get("window").height * 0.5} /> */}
+
+        <Text className="font-bold text-xl">{"Calendar"}</Text>
+        <WorkoutCalendar workouts={workouts} loading={loading} error={error}/>
+        <Spacer size={Dimensions.get("window").height * 0.05} />
+        <WorkoutHistoryRecent workouts={workouts} loading={loading} error={error}/>
       </ScrollView>
     </SafeAreaView>
   );

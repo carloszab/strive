@@ -1,5 +1,5 @@
 import { View, Button, TextInput, StyleSheet, ScrollView } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { v4 as uuidv4 } from "uuid";
 import WorkoutExercise from "../components/WorkoutExercise";
@@ -7,9 +7,13 @@ import { performMutation } from "../src/graphql/apollo";
 import * as mutations from "../src/graphql/mutations";
 
 const WorkoutViewScreen = ({ route, navigation }) => {
-  const [workoutName, onChangeWorkoutName] = useState(route.params.name);
+  const [workoutName, onChangeWorkoutName] = useState(route.params.name || "Custom Workout");
   const [exerciseName, onChangeExerciseName] = useState("");
-  const [exercises, onChangeExercises] = useState(route.params.detail);
+  const [exercises, onChangeExercises] = useState(route.params.detail || []);
+
+  useEffect(() => {
+    console.log("id Search: " + route.params.idSearch)
+  },[route.params.idSearch]);
 
   onAddExercise = () => {
     let myuuid = uuidv4();

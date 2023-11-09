@@ -1,20 +1,17 @@
-import { View, Text, FlatList, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Button } from "react-native";
 import React from "react";
-import * as queries from "../src/graphql/queries";
-import { useQuery } from "@apollo/client";
 import { useNavigation } from "@react-navigation/native";
 import { formatDistanceToNow } from 'date-fns';
 
-const WorkoutHistoryRecent = () => {
-  const { loading, error, data } = useQuery(queries.GET_WORKOUTS);
+const WorkoutHistoryRecent = (props) => {
 
   const navigation = useNavigation();
 
-  if (loading) {
+  if (props.loading) {
     return <Text>Loading...</Text>;
   }
 
-  if (error) {
+  if (props.error) {
     return <Text>Error: {error.message}</Text>;
   }
 
@@ -28,7 +25,15 @@ const WorkoutHistoryRecent = () => {
 
   return (
     <View>
-      {data.workout.map((workout) => {
+      <Text
+          className="font-bold text-xl"
+          onPress={() => {
+            navigation.navigate("WorkoutHistory", {workouts: props.workouts, loading: props.loading, error: props.error});
+          }}
+        >
+          {"History"}
+        </Text>
+      {props.workouts.workout.map((workout) => {
         const date = new Date(workout.timestamp);
         const dayOfWeek = date.getDay();
         const dayOfMonth = date.getDate();
@@ -79,7 +84,7 @@ const WorkoutHistoryRecent = () => {
               }}
             >
               <View>
-                <Text style={{ fontSize: 12, color: "gray" }}>{formattedTimestamp}</Text>
+                <Text style={{ fontSize: 12, color: "gray" }}>{dayName}</Text>
               </View>
               <View>
                 <Text style={{ fontSize: 12, color: "gray" }}>
@@ -91,6 +96,12 @@ const WorkoutHistoryRecent = () => {
           </TouchableOpacity>
         );
       })}
+      <Button
+          title="see more..."
+          onPress={() => {
+            navigation.navigate("WorkoutHistory", {workouts: props.workouts, loading: props.loading, error: props.error});
+          }}
+        />
     </View>
   );
 };
