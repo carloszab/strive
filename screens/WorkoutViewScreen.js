@@ -11,10 +11,6 @@ const WorkoutViewScreen = ({ route, navigation }) => {
   const [exerciseName, onChangeExerciseName] = useState("");
   const [exercises, onChangeExercises] = useState(route.params.detail || []);
 
-  useEffect(() => {
-    console.log("id Search: " + route.params.idSearch)
-  },[route.params.idSearch]);
-
   onAddExercise = () => {
     let myuuid = uuidv4();
     let exercises2 = [...exercises];
