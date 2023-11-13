@@ -1,9 +1,4 @@
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import React, { useLayoutEffect } from "react";
 
 const WorkoutHistory = ({ route, navigation }) => {
@@ -30,8 +25,10 @@ const WorkoutHistory = ({ route, navigation }) => {
           key={workout.id}
           onPress={() => {
             navigation.navigate("WorkoutView", {
+              id: workout.id,
               name: workout.name,
               detail: workout.detail,
+              timestamp: workout.timestamp,
             });
           }}
         >

@@ -45,7 +45,7 @@ const WorkoutHistoryRecent = (props) => {
         const formattedTimestamp = formatTimestamp(workout.timestamp);
         
         return (
-          <TouchableOpacity key={workout.id} onPress={() => {navigation.navigate("WorkoutView", {name: workout.name, detail:workout.detail});}}>
+          <TouchableOpacity key={workout.id} onPress={() => {navigation.navigate("WorkoutView", {id: workout.id, name: workout.name, detail:workout.detail, timestamp: workout.timestamp});}}>
           <View
             
             style={{

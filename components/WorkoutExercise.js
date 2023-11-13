@@ -4,31 +4,24 @@ import { v4 as uuidv4 } from "uuid";
 import WorkoutSet from "./WorkoutSet";
 
 const WorkoutExercise = (props) => {
-  const [sets, onChangeSets] = useState([]);
-
-  useEffect(() => {
-    if (props.sets !== undefined) {
-      onChangeSets(props.sets);
-    }
-  }, [props.sets]);
+  const [sets, onChangeSets] = useState(props.sets || []);
 
   onAddSet = () => {
     let myuuid = uuidv4();
     let sets2 = [...sets];
     sets2.push({ id: myuuid, weight: "", reps: "" });
     onChangeSets(sets2);
-    console.log("sets: ", JSON.stringify(sets));
   };
 
   handleChangeSet = (newSet) => {
     let setsAux = [...sets];
-    setsAux.map((set) => {
-        if (set["id"] === newSet["id"]) {
-            set = newSet;
-        }
-    });
+    for (i in setsAux) {
+      if (setsAux[i]["id"] === newSet["id"]) {
+        setsAux[i] = newSet;
+      }
+    }
     onChangeSets(setsAux);
-    props.onExerciseChange(props.id, sets);
+    props.onExerciseChange(props.id, setsAux);
   };
 
   return (

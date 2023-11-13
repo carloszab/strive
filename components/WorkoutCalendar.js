@@ -19,8 +19,10 @@ const WorkoutCalendar = (props) => {
           selected: true,
           marked: true,
           selectedColor: "black",
+          id: workout.id,
           name: workout.name,
-          detail: workout.detail
+          detail: workout.detail,
+          timestamp: workout.timestamp
         };
       });
 
@@ -62,8 +64,10 @@ const WorkoutCalendar = (props) => {
           console.log("selected day", day);
           if (markedDates[day.dateString]) {
             navigation.navigate("WorkoutView", {
+              id: markedDates[day.dateString].id,
               name: markedDates[day.dateString].name,
               detail: markedDates[day.dateString].detail,
+              timestamp: markedDates[day.dateString].timestamp,
             });
           }
         }}

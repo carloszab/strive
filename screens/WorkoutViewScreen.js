@@ -21,23 +21,23 @@ const WorkoutViewScreen = ({ route, navigation }) => {
   };
 
   onExerciseChange = (id, sets) => {
-    let exercisesAux = [...exercises];
-    exercisesAux.map((exercise) => {
-      if (exercise["id"] === id) {
-        exercise["sets"] = sets;
+    let exercisesAux = JSON.parse(JSON.stringify(exercises));
+    for (i in exercisesAux) {
+      if (exercisesAux[i]["id"] === id) {
+        exercisesAux[i]["sets"] = sets;
       }
-    });
+    }
     onChangeExercises(exercisesAux);
   };
 
-  const handleFinishExercise = performMutation(
-    mutations.INSERT_WORKOUT,
-    { id: uuidv4, name: workoutName, detail: exercises },
+  const handleUpdateExercise = performMutation(
+    mutations.UPDATE_WORKOUT,
+    { id: route.params.id, name: workoutName, detail: exercises, timestamp: route.params.timestamp},
     (data) => {
-      console.log(`Added todo with ID, `, data);
+      console.log(`Updated workout with ID, `, data);
     },
     (error) => {
-      console.error("Error adding todo", error);
+      console.error("Error adding workout", error);
     }
   );
 
@@ -80,7 +80,7 @@ const WorkoutViewScreen = ({ route, navigation }) => {
           <Button title="add exercise" onPress={onAddExercise}></Button>
         </View>
 
-        <Button title="update exercise" onPress={handleFinishExercise}></Button>
+        <Button title="update exercise" onPress={handleUpdateExercise}></Button>
       </ScrollView>
     </SafeAreaView>
   );

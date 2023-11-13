@@ -8,13 +8,13 @@ import React, { useState } from "react";
 const WorkoutSet = (props) => {
 
   const onChangeWeight = (e) => {
-    newSet = props.set;
+    let newSet = JSON.parse(JSON.stringify(props.set))
     newSet["weight"] = e;
     props.onChangeSet(newSet);
   };
 
   const onChangeReps = (e) => {
-    newSet = props.set;
+    let newSet = JSON.parse(JSON.stringify(props.set))
     newSet["reps"] = e;
     props.onChangeSet(newSet);
   };
