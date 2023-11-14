@@ -7,6 +7,7 @@ import {
   ScrollView,
   Button,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
 import React, { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -17,9 +18,10 @@ import WorkoutHistoryRecent from "../components/WorkoutHistoryRecent";
 import WorkoutCalendar from "../components/WorkoutCalendar";
 import * as queries from "../src/graphql/queries";
 import { useQuery } from "@apollo/client";
+import { buttons } from "../styles/buttons";
 
 const HomeScreen = () => {
-  const { loading, error, data: workouts} = useQuery(queries.GET_WORKOUTS);
+  const { loading, error, data: workouts } = useQuery(queries.GET_WORKOUTS);
 
   const fivePercentWindowHeight = Dimensions.get("window").height * 0.05;
   const SafeAreaViewAndroid =
@@ -46,24 +48,33 @@ const HomeScreen = () => {
           <Text className="font-bold text-2xl">Welcome</Text>
         </View>
         <Workouts />
-        <CustomButton
+        {/* <CustomButton
           onPress={() => {
             navigation.navigate("NewWorkout");
           }}
           title="New Workout"
-        />
-        <Button
-          title="test"
+        /> */}
+
+        <TouchableOpacity
           onPress={() => {
             navigation.navigate("NewWorkout");
           }}
-        />
-        <Spacer size={Dimensions.get("window").height * 0.05} />
+          style={buttons.button}
+          className="mx-3 my-5"
+        >
+          <Text style={buttons.text}>NEW WORKOUT</Text>
+        </TouchableOpacity>
+
+        {/* <Spacer size={Dimensions.get("window").height * 0.05} /> */}
 
         <Text className="font-bold text-xl">{"Calendar"}</Text>
-        <WorkoutCalendar workouts={workouts} loading={loading} error={error}/>
+        <WorkoutCalendar workouts={workouts} loading={loading} error={error} />
         <Spacer size={Dimensions.get("window").height * 0.05} />
-        <WorkoutHistoryRecent workouts={workouts} loading={loading} error={error}/>
+        <WorkoutHistoryRecent
+          workouts={workouts}
+          loading={loading}
+          error={error}
+        />
       </ScrollView>
     </SafeAreaView>
   );

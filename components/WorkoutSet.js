@@ -1,4 +1,4 @@
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import React, { useState } from "react";
 
 // import { styled } from 'nativewind';
@@ -6,46 +6,74 @@ import React, { useState } from "react";
 // const StyledView = styled(View)
 
 const WorkoutSet = (props) => {
-
   const onChangeWeight = (e) => {
-    let newSet = JSON.parse(JSON.stringify(props.set))
+    let newSet = JSON.parse(JSON.stringify(props.set));
     newSet["weight"] = e;
     props.onChangeSet(newSet);
   };
 
   const onChangeReps = (e) => {
-    let newSet = JSON.parse(JSON.stringify(props.set))
+    let newSet = JSON.parse(JSON.stringify(props.set));
     newSet["reps"] = e;
     props.onChangeSet(newSet);
   };
 
   return (
     <View>
-      <View class="">
-        <View className="flex flex-row space-x-2 justify-between items-center">
-          <Text>Set {props.index}</Text>
-
+      <View style={styles.container}>
+        <View style={styles.labelContainer}>
+          <Text style={styles.label}>{props.index}</Text>
+        </View>
+        <View style={styles.inputs}>
           <TextInput
-            className="border-2 border-gray-200 m-2 rounded-md"
-            textAlign={"center"}
-            onChangeText={(e) => onChangeWeight(e)}
-            value={props.set["weight"].toString()}
-            keyboardType="numeric"
+            className="border-gray-200 m-2 rounded-md"
+            style={styles.input}
             placeholder="weight"
-          />
-
-          <TextInput
-            className="border-2 border-gray-200 m-2 rounded-md"
             textAlign={"center"}
-            onChangeText={(e) => onChangeReps(e)}
-            value={props.set["reps"].toString()}
+            value={props.set["weight"].toString()}
+            onChangeText={(e) => onChangeWeight(e)}
             keyboardType="numeric"
+          />
+          <TextInput
+            className="border-gray-200 m-2 rounded-md"
+            style={styles.input}
             placeholder="reps"
+            textAlign={"center"}
+            value={props.set["reps"].toString()}
+            onChangeText={(e) => onChangeReps(e)}
+            keyboardType="numeric"
           />
         </View>
       </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  label: {
+    alignSelf: "center",
+    fontWeight: "bold",
+  },
+  labelContainer: {
+    width: 100,
+  },
+  inputs: {
+    flex: 1, // Allow inputs to take remaining space
+    flexDirection: "row",
+  },
+  input: {
+    flex: 1, // Equal width for both input columns
+    marginRight: 10, // Optional: Add some spacing between inputs
+    borderWidth: 1,
+    padding: 5,
+  },
+});
 
 export default WorkoutSet;

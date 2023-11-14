@@ -1,7 +1,10 @@
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, TouchableOpacity, Dimensions } from "react-native";
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import WorkoutSet from "./WorkoutSet";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faCirclePlus, faMugSaucer } from "@fortawesome/free-solid-svg-icons";
+import Spacer from "./Spacer";
 
 const WorkoutExercise = (props) => {
   const [sets, onChangeSets] = useState(props.sets || []);
@@ -26,7 +29,12 @@ const WorkoutExercise = (props) => {
 
   return (
     <View>
-      <Text>{props.name}</Text>
+      <Text className="font-medium text-lg mb-3">{props.name}</Text>
+      <View className="flex flex-row space-x-2 justify-between items-center px-12">
+        <Text className="font-medium">Set</Text>
+        <Text className="font-medium">Weight</Text>
+        <Text className="font-medium">Reps</Text>
+      </View>
 
       {sets.map((set, index) => (
         <View key={index}>
@@ -39,9 +47,33 @@ const WorkoutExercise = (props) => {
         </View>
       ))}
 
-      <Button title="add set" onPress={onAddSet}></Button>
+      <Spacer size={10} />
+
+      <TouchableOpacity onPress={onAddSet} style={styles.addSetButton}>
+        <FontAwesomeIcon icon={faCirclePlus} size={20} color="white" />
+        <Text style={styles.addSetLabel}>Add set</Text>
+      </TouchableOpacity>
     </View>
   );
+};
+
+const styles = {
+  addSetButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(185, 9, 9, .2)",
+    padding: 10,
+    borderRadius: 5,
+    paddingTop: 5,
+    paddingBottom: 5,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  addSetLabel: {
+    color: "#b90909",
+    marginLeft: 10,
+  },
 };
 
 export default WorkoutExercise;

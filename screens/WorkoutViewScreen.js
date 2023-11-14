@@ -1,13 +1,24 @@
-import { View, Button, TextInput, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  Button,
+  TextInput,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { v4 as uuidv4 } from "uuid";
 import WorkoutExercise from "../components/WorkoutExercise";
 import { performMutation } from "../src/graphql/apollo";
 import * as mutations from "../src/graphql/mutations";
+import { buttons } from "../styles/buttons";
 
 const WorkoutViewScreen = ({ route, navigation }) => {
-  const [workoutName, onChangeWorkoutName] = useState(route.params.name || "Custom Workout");
+  const [workoutName, onChangeWorkoutName] = useState(
+    route.params.name || "Custom Workout"
+  );
   const [exerciseName, onChangeExerciseName] = useState("");
   const [exercises, onChangeExercises] = useState(route.params.detail || []);
 
@@ -30,14 +41,30 @@ const WorkoutViewScreen = ({ route, navigation }) => {
     onChangeExercises(exercisesAux);
   };
 
-  const handleUpdateExercise = performMutation(
+  const handleUpdateWorkout = performMutation(
     mutations.UPDATE_WORKOUT,
-    { id: route.params.id, name: workoutName, detail: exercises, timestamp: route.params.timestamp},
+    {
+      id: route.params.id,
+      name: workoutName,
+      detail: exercises,
+      timestamp: route.params.timestamp,
+    },
     (data) => {
       console.log(`Updated workout with ID, `, data);
     },
     (error) => {
-      console.error("Error adding workout", error);
+      console.error("Error updating workout", error);
+    }
+  );
+
+  const handleDeleteWorkout = performMutation(
+    mutations.DELETE_WORKOUT,
+    { id: route.params.id },
+    (data) => {
+      console.log(`Deleted workout with ID, `, data);
+    },
+    (error) => {
+      console.error("Error deleting workout", error);
     }
   );
 
@@ -48,7 +75,6 @@ const WorkoutViewScreen = ({ route, navigation }) => {
           className="border-2 border-gray-200 m-2 rounded-md"
           onChangeText={(e) => onChangeWorkoutName(e)}
           value={workoutName.toString()}
-          keyboardType="numeric"
           placeholder="Workout Name"
         />
 
@@ -71,22 +97,37 @@ const WorkoutViewScreen = ({ route, navigation }) => {
         </View>
 
         <View className="flex flex-row space-x-2 justify-between m-2">
-          <TextInput
-            className="border-2 border-gray-200 m-2 rounded-md"
-            onChangeText={(e) => onChangeExerciseName(e)}
-            value={exerciseName.toString()}
-            placeholder="Exercise Name"
-          />
-          <Button title="add exercise" onPress={onAddExercise}></Button>
-        </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              className="border-2 border-gray-200 m-2 rounded-md"
+              style={styles.input}
+              textAlign={"center"}
+              onChangeText={(e) => onChangeExerciseName(e)}
+              value={exerciseName.toString()}
+              placeholder="Exercise Name"
+            />
+          </View>
 
-        <Button title="update exercise" onPress={handleUpdateExercise}></Button>
+          <TouchableOpacity onPress={onAddExercise} style={buttons.button}>
+            <Text style={buttons.text}>ADD EXERCISE</Text>
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity onPress={handleUpdateWorkout} style={buttons.button} className="m-3">
+          <Text style={buttons.text}>UPDATE WORKOUT</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleDeleteWorkout} style={buttons.button} className="m-3 mt-0">
+          <Text style={buttons.text}>DELETE WORKOUT</Text>
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  inputContainer: {
+    flex: 1,
+    flexDirection: "row",
+  },
   input: {
     height: 40,
     margin: 12,

@@ -22,13 +22,11 @@ const WorkoutCalendar = (props) => {
           id: workout.id,
           name: workout.name,
           detail: workout.detail,
-          timestamp: workout.timestamp
+          timestamp: workout.timestamp,
         };
       });
 
       setMarkedDates(auxMarkedDates);
-
-      console.log(markedDates);
     }
   }, [props.workouts]);
 

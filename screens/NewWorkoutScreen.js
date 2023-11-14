@@ -1,12 +1,20 @@
-import { View, Button, TextInput, StyleSheet } from "react-native";
+import {
+  View,
+  Button,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { v4 as uuidv4 } from "uuid";
 import WorkoutExercise from "../components/WorkoutExercise";
 import { performMutation } from "../src/graphql/apollo";
 import * as mutations from "../src/graphql/mutations";
+import { buttons } from "../styles/buttons";
 
-const NewWorkoutScreen = ({navigation}) => {
+const NewWorkoutScreen = ({ navigation }) => {
   const [workoutName, onChangeWorkoutName] = useState("Custom Workout");
   const [exerciseName, onChangeExerciseName] = useState("");
   const [exercises, onChangeExercises] = useState([]);
@@ -74,21 +82,41 @@ const NewWorkoutScreen = ({navigation}) => {
       </View>
 
       <View className="flex flex-row space-x-2 justify-between m-2">
-        <TextInput
-          className="border-2 border-gray-200 m-2 rounded-md"
-          onChangeText={(e) => onChangeExerciseName(e)}
-          value={exerciseName.toString()}
-          placeholder="Exercise Name"
-        />
-        <Button title="add exercise" onPress={onAddExercise}></Button>
+        <View style={styles.inputContainer}>
+          <TextInput
+            className="border-2 border-gray-200 m-2 rounded-md"
+            style={styles.input}
+            textAlign={"center"}
+            onChangeText={(e) => onChangeExerciseName(e)}
+            value={exerciseName.toString()}
+            placeholder="Exercise Name"
+          />
+        </View>
+
+        <TouchableOpacity
+          onPress={onAddExercise}
+          style={buttons.button}
+        >
+          <Text style={buttons.text}>ADD EXERCISE</Text>
+        </TouchableOpacity>
       </View>
 
-      <Button title="finish exercise" onPress={handleFinishExercise}></Button>
+      <TouchableOpacity
+        onPress={handleFinishExercise}
+        style={buttons.button}
+        className="m-3"
+      >
+        <Text style={buttons.text}>FINISH WORKOUT</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  inputContainer: {
+    flex: 1,
+    flexDirection: "row",
+  },
   input: {
     height: 40,
     margin: 12,

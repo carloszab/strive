@@ -32,11 +32,3 @@ export const GET_WORKOUT_BY_PK = gql`
     }
   }
 `;
-
-export const DELETE_WORKOUT = gql`
-  mutation DeleteWorkout($id: uuid!) {
-    delete_workout(where: { id: { _eq: $id } }) {
-      affected_rows
-    }
-  }
-`;
