@@ -24,18 +24,7 @@ const WorkoutHistoryRecent = (props) => {
 
   return (
     <View>
-      <Text
-        className="font-bold text-xl"
-        onPress={() => {
-          navigation.navigate("WorkoutHistory", {
-            workouts: props.workouts,
-            loading: props.loading,
-            error: props.error,
-          });
-        }}
-      >
-        {"History"}
-      </Text>
+      <Text className="font-bold text-xl">{"History"}</Text>
       {props.workouts.workout.map((workout) => {
         const date = new Date(workout.timestamp);
         const dayOfWeek = date.getDay();

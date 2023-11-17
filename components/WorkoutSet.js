@@ -65,12 +65,12 @@ const styles = StyleSheet.create({
     width: 100,
   },
   inputs: {
-    flex: 1, // Allow inputs to take remaining space
+    flex: 1,
     flexDirection: "row",
   },
   input: {
-    flex: 1, // Equal width for both input columns
-    marginRight: 10, // Optional: Add some spacing between inputs
+    flex: 1,
+    marginRight: 10,
     borderWidth: 1,
     padding: 5,
   },

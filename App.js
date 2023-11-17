@@ -11,6 +11,9 @@ import "react-native-get-random-values";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import WorkoutViewScreen from "./screens/WorkoutViewScreen";
 
+import { Provider } from 'react-redux';
+import store from './redux/store';
+
 const Stack = createNativeStackNavigator();
 
 const client = new ApolloClient({
@@ -23,6 +26,7 @@ const client = new ApolloClient({
 
 export default function App() {
   return (
+    <Provider store={store}>
     <ApolloProvider client={client}>
       <NavigationContainer>
         <Stack.Navigator>
@@ -36,5 +40,6 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </ApolloProvider>
+    </Provider>
   );
 }

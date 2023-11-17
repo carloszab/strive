@@ -19,9 +19,12 @@ import WorkoutCalendar from "../components/WorkoutCalendar";
 import * as queries from "../src/graphql/queries";
 import { useQuery } from "@apollo/client";
 import { buttons } from "../styles/buttons";
+import { useSelector } from "react-redux";
 
 const HomeScreen = () => {
   const { loading, error, data: workouts } = useQuery(queries.GET_WORKOUTS);
+  const exercisesRedux = useSelector((state) => state.exercises);
+  const customWorkoutName = useSelector((state) => state.customWorkoutName);
 
   const fivePercentWindowHeight = Dimensions.get("window").height * 0.05;
   const SafeAreaViewAndroid =
@@ -36,8 +39,16 @@ const HomeScreen = () => {
     });
   }, []);
 
+  customWorkoutButtonText = () => {
+    if (exercisesRedux.length === 0 && customWorkoutName === "Custom Workout") {
+      return <Text style={buttons.text}>NEW WORKOUT</Text>;
+    } else {
+      return <Text style={buttons.text}>WORKOUT IN PROGRESS...</Text>;
+    }
+  };
+
   return (
-    <SafeAreaView className="bg-white py-5 mb-5">
+    <SafeAreaView className="bg-white py-5 mb-5 p-3">
       <Spacer size={SafeAreaViewAndroid} />
       <ScrollView>
         <View className="flex-row pb-3 items-center space-x-2">
@@ -62,7 +73,7 @@ const HomeScreen = () => {
           style={buttons.button}
           className="mx-3 my-5"
         >
-          <Text style={buttons.text}>NEW WORKOUT</Text>
+          {customWorkoutButtonText()}
         </TouchableOpacity>
 
         {/* <Spacer size={Dimensions.get("window").height * 0.05} /> */}

@@ -1,11 +1,18 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import WorkoutCard from "./WorkoutCard";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 const Workouts = () => {
   return (
     <View>
-      <Text className="font-bold text-xl">{"Workouts"}</Text>
+      <View className="flex space-x-1 flex-row items-center justify-between mr-4">
+        <Text className="font-bold text-xl">{"Templates"}</Text>
+        <TouchableOpacity>
+          <FontAwesomeIcon icon={faPlus} />
+        </TouchableOpacity>
+      </View>
       <ScrollView
         horizontal
         contentContainerStyle={{ paddingHorizontal: 15, paddingTop: 10 }}

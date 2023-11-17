@@ -11,9 +11,10 @@ const WorkoutExercise = (props) => {
 
   onAddSet = () => {
     let myuuid = uuidv4();
-    let sets2 = [...sets];
-    sets2.push({ id: myuuid, weight: "", reps: "" });
-    onChangeSets(sets2);
+    let setsAux = [...sets];
+    setsAux.push({ id: myuuid, weight: "", reps: "" });
+    onChangeSets(setsAux);
+    props.onExerciseChange(props.id, setsAux);
   };
 
   handleChangeSet = (newSet) => {
@@ -51,7 +52,7 @@ const WorkoutExercise = (props) => {
 
       <TouchableOpacity onPress={onAddSet} style={styles.addSetButton}>
         <FontAwesomeIcon icon={faCirclePlus} size={20} color="white" />
-        <Text style={styles.addSetLabel}>Add set</Text>
+        <Text style={styles.addSetLabel}>Add Set</Text>
       </TouchableOpacity>
     </View>
   );

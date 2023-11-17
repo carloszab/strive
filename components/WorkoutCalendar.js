@@ -52,11 +52,6 @@ const WorkoutCalendar = (props) => {
     <View>
       <Calendar
         displayLoadingIndicator={props.loading}
-        style={{
-          borderWidth: 1,
-          borderColor: "gray",
-          height: 350,
-        }}
         current={getCurrentDate() || "2023-01-01"}
         onDayPress={(day) => {
           console.log("selected day", day);
