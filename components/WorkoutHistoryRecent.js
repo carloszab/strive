@@ -12,7 +12,7 @@ const WorkoutHistoryRecent = (props) => {
   }
 
   if (props.error) {
-    return <Text>Error: {error.message}</Text>;
+    return <Text>Error getting workouts</Text>;
   }
 
   function formatTimestamp(timestamp) {
@@ -53,6 +53,7 @@ const WorkoutHistoryRecent = (props) => {
                 name: workout.name,
                 detail: workout.detail,
                 timestamp: workout.timestamp,
+                refetchWorkouts: props.refetchWorkouts,
               });
             }}
           >
@@ -111,6 +112,7 @@ const WorkoutHistoryRecent = (props) => {
             workouts: props.workouts,
             loading: props.loading,
             error: props.error,
+            refetchWorkouts: props.refetchWorkouts,
           });
         }}
         style={buttons.button}

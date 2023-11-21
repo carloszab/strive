@@ -13,7 +13,7 @@ const WorkoutHistory = ({ route, navigation }) => {
   }
 
   if (route.params.error) {
-    return <Text>Error: {route.params.error.message}</Text>;
+    return <Text>Error getting workouts</Text>;
   }
 
   return (
@@ -29,6 +29,7 @@ const WorkoutHistory = ({ route, navigation }) => {
               name: workout.name,
               detail: workout.detail,
               timestamp: workout.timestamp,
+              refetchWorkouts: route.params.refetchWorkouts,
             });
           }}
         >

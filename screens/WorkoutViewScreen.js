@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Text,
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -51,6 +52,8 @@ const WorkoutViewScreen = ({ route, navigation }) => {
     },
     (data) => {
       console.log(`Updated workout with ID, `, data);
+      route.params.refetchWorkouts();
+      navigation.navigate("Home");
     },
     (error) => {
       console.error("Error updating workout", error);
@@ -62,11 +65,39 @@ const WorkoutViewScreen = ({ route, navigation }) => {
     { id: route.params.id },
     (data) => {
       console.log(`Deleted workout with ID, `, data);
+      route.params.refetchWorkouts();
+      navigation.navigate("Home");
     },
     (error) => {
       console.error("Error deleting workout", error);
     }
   );
+
+  const showUpdateAlert = () =>
+    Alert.alert(
+      "Update workout",
+      "Are you sure you want to update this workout?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        { text: "OK", onPress: handleUpdateWorkout },
+      ]
+    );
+
+  const showDeleteAlert = () =>
+    Alert.alert(
+      "Delete workout",
+      "Are you sure you want to delete this workout?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        { text: "OK", onPress: handleDeleteWorkout },
+      ]
+    );
 
   return (
     <SafeAreaView className="bg-white pt-1">
@@ -112,10 +143,18 @@ const WorkoutViewScreen = ({ route, navigation }) => {
             <Text style={buttons.text}>ADD EXERCISE</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={handleUpdateWorkout} style={buttons.button} className="m-3">
+        <TouchableOpacity
+          onPress={showUpdateAlert}
+          style={buttons.button}
+          className="m-3"
+        >
           <Text style={buttons.text}>UPDATE WORKOUT</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleDeleteWorkout} style={buttons.button} className="m-3 mt-0">
+        <TouchableOpacity
+          onPress={showDeleteAlert}
+          style={buttons.button}
+          className="m-3 mt-0"
+        >
           <Text style={buttons.text}>DELETE WORKOUT</Text>
         </TouchableOpacity>
       </ScrollView>

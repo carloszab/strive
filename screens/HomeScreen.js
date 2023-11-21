@@ -9,7 +9,7 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import Spacer from "../components/Spacer";
 import CustomButton from "../components/Button";
@@ -22,9 +22,12 @@ import { buttons } from "../styles/buttons";
 import { useSelector } from "react-redux";
 
 const HomeScreen = () => {
-  const { loading, error, data: workouts } = useQuery(queries.GET_WORKOUTS);
-  const exercisesRedux = useSelector((state) => state.exercises);
-  const customWorkoutName = useSelector((state) => state.customWorkoutName);
+  const { loading, error, data: workouts, refetch: refetchWorkouts } = useQuery(queries.GET_WORKOUTS);
+  const customWorkoutStarted = useSelector(
+    (state) => state.customWorkoutStarted
+  );
+
+  const [modalVisible, setModalVisible] = useState(true);
 
   const fivePercentWindowHeight = Dimensions.get("window").height * 0.05;
   const SafeAreaViewAndroid =
@@ -40,10 +43,10 @@ const HomeScreen = () => {
   }, []);
 
   customWorkoutButtonText = () => {
-    if (exercisesRedux.length === 0 && customWorkoutName === "Custom Workout") {
-      return <Text style={buttons.text}>NEW WORKOUT</Text>;
-    } else {
+    if (customWorkoutStarted) {
       return <Text style={buttons.text}>WORKOUT IN PROGRESS...</Text>;
+    } else {
+      return <Text style={buttons.text}>NEW WORKOUT</Text>;
     }
   };
 
@@ -68,15 +71,13 @@ const HomeScreen = () => {
 
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("NewWorkout");
+            navigation.navigate("NewWorkout", {refetchWorkouts: refetchWorkouts});
           }}
           style={buttons.button}
           className="mx-3 my-5"
         >
           {customWorkoutButtonText()}
         </TouchableOpacity>
-
-        {/* <Spacer size={Dimensions.get("window").height * 0.05} /> */}
 
         <Text className="font-bold text-xl">{"Calendar"}</Text>
         <WorkoutCalendar workouts={workouts} loading={loading} error={error} />
@@ -85,6 +86,7 @@ const HomeScreen = () => {
           workouts={workouts}
           loading={loading}
           error={error}
+          refetchWorkouts={refetchWorkouts}
         />
       </ScrollView>
     </SafeAreaView>

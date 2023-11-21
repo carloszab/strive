@@ -8,7 +8,7 @@ const Workouts = () => {
   return (
     <View>
       <View className="flex space-x-1 flex-row items-center justify-between mr-4">
-        <Text className="font-bold text-xl">{"Templates"}</Text>
+        <Text className="font-bold text-xl">{"Programs"}</Text>
         <TouchableOpacity>
           <FontAwesomeIcon icon={faPlus} />
         </TouchableOpacity>

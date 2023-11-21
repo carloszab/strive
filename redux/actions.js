@@ -11,3 +11,15 @@ export const setExercises = (exercises) => {
     payload: exercises,
   };
 };
+
+export const startCustomWorkout = () => {
+  return {
+    type: "START_CUSTOM_WORKOUT",
+  };
+};
+
+export const resetCustomWorkout = () => {
+  return {
+    type: "RESET_CUSTOM_WORKOUT",
+  };
+};
