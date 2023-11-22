@@ -27,16 +27,16 @@ const Workouts = () => {
           imageUrl="https://images.unsplash.com/photo-1593455026613-e30bfc0a54a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2574&q=80"
         />
         <WorkoutCard
-          title="Cardio"
-          imageUrl="https://images.unsplash.com/photo-1649174457187-75c37d3fe7ac?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2525&q=80"
+          title="HIIT"
+          imageUrl="https://images.unsplash.com/photo-1586401426077-df67f1316076?q=80&w=2564&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         />
         <WorkoutCard
-          title="PPL"
-          imageUrl="https://images.unsplash.com/photo-1507398941214-572c25f4b1dc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2573&q=80"
+          title="Powerbuilder"
+          imageUrl="https://images.unsplash.com/photo-1521804906057-1df8fdb718b7?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         />
         <WorkoutCard
-          title="Bodyweight"
-          imageUrl="https://images.unsplash.com/photo-1593455026613-e30bfc0a54a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2574&q=80"
+          title="Full Body"
+          imageUrl="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         />
         <WorkoutCard
           title="Cardio"
