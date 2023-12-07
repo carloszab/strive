@@ -1,11 +1,13 @@
 import { gql } from "@apollo/client";
 
 export const INSERT_WORKOUT = gql`
-  mutation InsertWorkout($name: String, $detail: jsonb) {
-    insert_workout_one(object: { name: $name, detail: $detail }) {
+  mutation InsertWorkout($name: String, $detail: jsonb, $duration_seconds: Int!) {
+    insert_workout_one(object: { name: $name, detail: $detail, duration_seconds: $duration_seconds }) {
       id
       name
       detail
+      timestamp
+      duration_seconds
     }
   }
 `;
@@ -16,15 +18,17 @@ export const UPDATE_WORKOUT = gql`
     $name: String!
     $detail: jsonb!
     $timestamp: timestamptz!
+    $duration_seconds: Int!
   ) {
     update_workout_by_pk(
       pk_columns: { id: $id }
-      _set: { name: $name, detail: $detail, timestamp: $timestamp }
+      _set: { name: $name, detail: $detail, timestamp: $timestamp, duration_seconds: $duration_seconds }
     ) {
       id
       name
       detail
       timestamp
+      duration_seconds
     }
   }
 `;

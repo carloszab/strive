@@ -37,6 +37,7 @@ const NewWorkoutScreen = ({ route, navigation }) => {
   const exercisesRedux = useSelector((state) => state.exercises);
   const [exercises, onChangeExercises] = useState(exercisesRedux || []);
   const [elapsedTime, setElapsedTime] = useState("0:00");
+  const [elapsedTimeSeconds, setElapsedTimeSeconds] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -99,8 +100,10 @@ const NewWorkoutScreen = ({ route, navigation }) => {
       const minutes = Math.floor(elapsedTime / 60000);
       const seconds = Math.floor((elapsedTime % 60000) / 1000);
       setElapsedTime(`${minutes}:${seconds < 10 ? "0" : ""}${seconds}`);
+      setElapsedTimeSeconds(Math.floor(elapsedTime / 1000));
     } else {
       setElapsedTime("0:00");
+      setElapsedTimeSeconds(0);
     }
   };
 
@@ -111,7 +114,7 @@ const NewWorkoutScreen = ({ route, navigation }) => {
 
   const handleFinishWorkout = performMutation(
     mutations.INSERT_WORKOUT,
-    { id: uuidv4, name: workoutName, detail: exercises },
+    { id: uuidv4, name: workoutName, detail: exercises, duration_seconds: elapsedTimeSeconds },
     (data) => {
       console.log(`Added todo with ID, `, data);
       resetCustomWorkoutData();

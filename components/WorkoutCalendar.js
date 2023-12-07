@@ -23,6 +23,7 @@ const WorkoutCalendar = (props) => {
           name: workout.name,
           detail: workout.detail,
           timestamp: workout.timestamp,
+          duration_seconds: workout.duration_seconds,
         };
       });
 
@@ -61,6 +62,7 @@ const WorkoutCalendar = (props) => {
               name: markedDates[day.dateString].name,
               detail: markedDates[day.dateString].detail,
               timestamp: markedDates[day.dateString].timestamp,
+              duration_seconds: markedDates[day.dateString].duration_seconds,
             });
           }
         }}

@@ -22,10 +22,23 @@ const WorkoutHistoryRecent = (props) => {
     return formatDistanceToNow(previousDate, { addSuffix: true });
   }
 
+  function formatSecondsToHoursAndMinutes(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+
+    if (hours > 0) {
+      return `${hours} ${hours === 1 ? "hour" : "hours"} and ${minutes} ${
+        minutes === 1 ? "minute" : "minutes"
+      }`;
+    } else {
+      return `${minutes} ${minutes === 1 ? "minute" : "minutes"}`;
+    }
+  }
+
   return (
     <View>
       <Text className="font-bold text-xl">{"History"}</Text>
-      {props.workouts.workout.map((workout) => {
+      {props.workouts.workout.slice(0,5).map((workout) => {
         const date = new Date(workout.timestamp);
         const dayOfWeek = date.getDay();
         const dayOfMonth = date.getDate();
@@ -53,6 +66,7 @@ const WorkoutHistoryRecent = (props) => {
                 name: workout.name,
                 detail: workout.detail,
                 timestamp: workout.timestamp,
+                duration_seconds: workout.duration_seconds,
                 refetchWorkouts: props.refetchWorkouts,
               });
             }}
@@ -83,7 +97,7 @@ const WorkoutHistoryRecent = (props) => {
                 </View>
                 <View>
                   <Text style={{ fontSize: 16, color: "black" }}>
-                    1 hour 50 minutes
+                    {formatSecondsToHoursAndMinutes(workout.duration_seconds)}
                   </Text>
                 </View>
               </View>

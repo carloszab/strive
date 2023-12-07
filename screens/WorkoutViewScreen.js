@@ -49,6 +49,7 @@ const WorkoutViewScreen = ({ route, navigation }) => {
       name: workoutName,
       detail: exercises,
       timestamp: route.params.timestamp,
+      duration_seconds: route.params.duration_seconds,
     },
     (data) => {
       console.log(`Updated workout with ID, `, data);

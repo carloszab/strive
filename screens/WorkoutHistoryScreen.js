@@ -1,5 +1,6 @@
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import React, { useLayoutEffect } from "react";
+import { formatDistanceToNow } from "date-fns";
 
 const WorkoutHistory = ({ route, navigation }) => {
   useLayoutEffect(() => {
@@ -16,6 +17,41 @@ const WorkoutHistory = ({ route, navigation }) => {
     return <Text>Error getting workouts</Text>;
   }
 
+  function formatSecondsToHoursAndMinutes(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+
+    if (hours > 0) {
+      return `${hours} ${hours === 1 ? "hour" : "hours"} and ${minutes} ${
+        minutes === 1 ? "minute" : "minutes"
+      }`;
+    } else {
+      return `${minutes} ${minutes === 1 ? "minute" : "minutes"}`;
+    }
+  }
+
+  function formatTimestamp(timestamp) {
+    const currentDate = new Date();
+    const previousDate = new Date(timestamp);
+
+    return formatDistanceToNow(previousDate, { addSuffix: true });
+  }
+
+  function formatWeekDay(timestamp) {
+    const date = new Date(timestamp);
+        const dayOfWeek = date.getDay();
+        const daysOfWeekNames = [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ];
+        return dayName = daysOfWeekNames[dayOfWeek];
+  }
+
   return (
     <FlatList
       data={route.params.workouts.workout}
@@ -29,6 +65,7 @@ const WorkoutHistory = ({ route, navigation }) => {
               name: workout.name,
               detail: workout.detail,
               timestamp: workout.timestamp,
+              duration_seconds: workout.duration_seconds,
               refetchWorkouts: route.params.refetchWorkouts,
             });
           }}
@@ -59,7 +96,7 @@ const WorkoutHistory = ({ route, navigation }) => {
               </View>
               <View>
                 <Text style={{ fontSize: 16, color: "black" }}>
-                  1 hour 50 minutes
+                  {formatSecondsToHoursAndMinutes(workout.duration_seconds)}
                 </Text>
               </View>
             </View>
@@ -70,11 +107,11 @@ const WorkoutHistory = ({ route, navigation }) => {
               }}
             >
               <View>
-                <Text style={{ fontSize: 12, color: "gray" }}>monday</Text>
+                <Text style={{ fontSize: 12, color: "gray" }}>{formatWeekDay(workout.timestamp)}</Text>
               </View>
               <View>
                 <Text style={{ fontSize: 12, color: "gray" }}>
-                  <Text> 5 minutes ago</Text>
+                  <Text>{formatTimestamp(workout.timestamp)}</Text>
                 </Text>
               </View>
             </View>

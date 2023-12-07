@@ -2,11 +2,12 @@ import { gql } from "@apollo/client";
 
 export const GET_WORKOUTS = gql`
   query GetWorkouts {
-    workout {
+    workout (order_by: {timestamp: desc}) {
       id
       name
       detail
       timestamp
+      duration_seconds
     }
   }
 `;
@@ -18,6 +19,7 @@ export const GET_LAST_WORKOUTS = gql`
       name
       detail
       timestamp
+      duration_seconds
     }
   }
 `;
@@ -29,6 +31,7 @@ export const GET_WORKOUT_BY_PK = gql`
       name
       detail
       timestamp
+      duration_seconds
     }
   }
 `;
