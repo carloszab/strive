@@ -22,7 +22,12 @@ import { buttons } from "../styles/buttons";
 import { useSelector } from "react-redux";
 
 const HomeScreen = () => {
-  const { loading, error, data: workouts, refetch: refetchWorkouts } = useQuery(queries.GET_WORKOUTS);
+  const {
+    loading,
+    error,
+    data: workouts,
+    refetch: refetchWorkouts,
+  } = useQuery(queries.GET_WORKOUTS);
   const customWorkoutStarted = useSelector(
     (state) => state.customWorkoutStarted
   );
@@ -71,7 +76,9 @@ const HomeScreen = () => {
 
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("NewWorkout", {refetchWorkouts: refetchWorkouts});
+            navigation.navigate("NewWorkout", {
+              refetchWorkouts: refetchWorkouts,
+            });
           }}
           style={buttons.button}
           className="mx-3 my-5"
@@ -80,7 +87,12 @@ const HomeScreen = () => {
         </TouchableOpacity>
 
         <Text className="font-bold text-xl">{"Calendar"}</Text>
-        <WorkoutCalendar workouts={workouts} loading={loading} error={error} />
+        <WorkoutCalendar
+          workouts={workouts}
+          loading={loading}
+          error={error}
+          refetchWorkouts={refetchWorkouts}
+        />
         <Spacer size={Dimensions.get("window").height * 0.05} />
         <WorkoutHistoryRecent
           workouts={workouts}

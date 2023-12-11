@@ -63,6 +63,7 @@ const WorkoutCalendar = (props) => {
               detail: markedDates[day.dateString].detail,
               timestamp: markedDates[day.dateString].timestamp,
               duration_seconds: markedDates[day.dateString].duration_seconds,
+              refetchWorkouts: props.refetchWorkouts,
             });
           }
         }}
