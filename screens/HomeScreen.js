@@ -20,6 +20,7 @@ import * as queries from "../src/graphql/queries";
 import { useQuery } from "@apollo/client";
 import { buttons } from "../styles/buttons";
 import { useSelector } from "react-redux";
+import { Platform } from 'react-native';
 
 const HomeScreen = () => {
   const {
