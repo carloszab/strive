@@ -23,7 +23,7 @@ const WorkoutViewScreen = ({ route, navigation }) => {
   const [exerciseName, onChangeExerciseName] = useState("");
   const [exercises, onChangeExercises] = useState(route.params.detail || []);
 
-  onAddExercise = () => {
+  const onAddExercise = () => {
     let myuuid = uuidv4();
     let exercises2 = [...exercises];
     exercises2.push({ id: myuuid, name: exerciseName });
@@ -32,9 +32,9 @@ const WorkoutViewScreen = ({ route, navigation }) => {
     console.log("exercises: ", JSON.stringify(exercises));
   };
 
-  onExerciseChange = (id, sets) => {
+  const onExerciseChange = (id, sets) => {
     let exercisesAux = JSON.parse(JSON.stringify(exercises));
-    for (i in exercisesAux) {
+    for (const i in exercisesAux) {
       if (exercisesAux[i]["id"] === id) {
         exercisesAux[i]["sets"] = sets;
       }

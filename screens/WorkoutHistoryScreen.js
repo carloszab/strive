@@ -49,7 +49,7 @@ const WorkoutHistory = ({ route, navigation }) => {
           "Friday",
           "Saturday",
         ];
-        return dayName = daysOfWeekNames[dayOfWeek];
+        return daysOfWeekNames[dayOfWeek];
   }
 
   return (

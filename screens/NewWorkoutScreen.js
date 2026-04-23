@@ -61,7 +61,7 @@ const NewWorkoutScreen = ({ route, navigation }) => {
     return () => clearInterval(intervalId);
   }, [customWorkoutStarted, customWorkoutTime]);
 
-  onAddExercise = () => {
+  const onAddExercise = () => {
     let myuuid = uuidv4();
     let exercisesAux = [...exercises];
     exercisesAux.push({ id: myuuid, name: exerciseName });
@@ -70,7 +70,7 @@ const NewWorkoutScreen = ({ route, navigation }) => {
     onChangeExerciseName("");
   };
 
-  onExerciseChange = (id, sets) => {
+  const onExerciseChange = (id, sets) => {
     let exercisesAux = [...exercises];
     exercisesAux.map((exercise) => {
       if (exercise["id"] === id) {
@@ -81,19 +81,19 @@ const NewWorkoutScreen = ({ route, navigation }) => {
     dispatch(setExercises(exercisesAux));
   };
 
-  onChangeCustomWorkoutName = (name) => {
+  const onChangeCustomWorkoutName = (name) => {
     onChangeWorkoutName(name);
     dispatch(setCustomWorkoutName(name));
   };
 
-  resetCustomWorkoutData = () => {
+  const resetCustomWorkoutData = () => {
     onChangeExercises([]);
     onChangeExerciseName("");
     onChangeWorkoutName("Custom Workout");
     dispatch(resetCustomWorkout());
   };
 
-  calculateElapsedTime = () => {
+  const calculateElapsedTime = () => {
     if (customWorkoutTime != null) {
       const currentTime = new Date();
       const elapsedTime = currentTime - new Date(customWorkoutTime);

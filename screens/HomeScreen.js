@@ -48,7 +48,7 @@ const HomeScreen = () => {
     });
   }, []);
 
-  customWorkoutButtonText = () => {
+  const customWorkoutButtonText = () => {
     if (customWorkoutStarted) {
       return <Text style={buttons.text}>WORKOUT IN PROGRESS...</Text>;
     } else {

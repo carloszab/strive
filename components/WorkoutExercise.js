@@ -9,7 +9,7 @@ import Spacer from "./Spacer";
 const WorkoutExercise = (props) => {
   const [sets, onChangeSets] = useState(props.sets || []);
 
-  onAddSet = () => {
+  const onAddSet = () => {
     let myuuid = uuidv4();
     let setsAux = [...sets];
     setsAux.push({ id: myuuid, weight: "", reps: "" });
@@ -17,9 +17,9 @@ const WorkoutExercise = (props) => {
     props.onExerciseChange(props.id, setsAux);
   };
 
-  handleChangeSet = (newSet) => {
+  const handleChangeSet = (newSet) => {
     let setsAux = [...sets];
-    for (i in setsAux) {
+    for (const i in setsAux) {
       if (setsAux[i]["id"] === newSet["id"]) {
         setsAux[i] = newSet;
       }

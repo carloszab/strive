@@ -7,7 +7,7 @@ const WorkoutCalendar = (props) => {
   const [markedDates, setMarkedDates] = useState({});
 
   useEffect(() => {
-    auxMarkedDates = markedDates;
+    const auxMarkedDates = markedDates;
 
     if (props.workouts) {
       props.workouts.workout.map((workout) => {
